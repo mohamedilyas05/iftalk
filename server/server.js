@@ -103,9 +103,7 @@ socket.on("sendMessage", (data) => {
 
  
   // 🔴 DISCONNECT
-  socket.on("disconnect", async (reason) => {
-  console.log("User disconnected:", socket.id, reason);
-
+  socket.on("disconnect", async () => {
   let disconnectedUserId = null;
 
   for (let [userId, socketId] of onlineUsers.entries()) {
@@ -117,13 +115,17 @@ socket.on("sendMessage", (data) => {
   }
 
   if (disconnectedUserId) {
-    try {
-      await User.findByIdAndUpdate(disconnectedUserId, {
-        lastSeen: new Date(),
-      });
-    } catch (err) {
-      console.log(err);
-    }
+    const updatedUser = await User.findByIdAndUpdate(
+      disconnectedUserId,
+      { lastSeen: new Date() },
+      { new: true }
+    );
+
+    // 🔥 broadcast update
+    io.emit("userLastSeenUpdate", {
+      userId: disconnectedUserId,
+      lastSeen: updatedUser.lastSeen,
+    });
   }
 
   io.emit("getOnlineUsers", Array.from(onlineUsers.keys()));

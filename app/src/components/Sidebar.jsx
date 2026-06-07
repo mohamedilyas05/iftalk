@@ -23,7 +23,26 @@ useEffect(() => {
     fetchConversations();
   }, []);
 
+useEffect(() => {
+  socket.on("userLastSeenUpdate", (data) => {
+    setConversations((prev) =>
+      prev.map((c) => {
+        const updatedParticipants = c.participants.map((p) =>
+          p._id === data.userId
+            ? { ...p, lastSeen: data.lastSeen }
+            : p
+        );
 
+        return {
+          ...c,
+          participants: updatedParticipants,
+        };
+      })
+    );
+  });
+
+  return () => socket.off("userLastSeenUpdate");
+}, []);
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
