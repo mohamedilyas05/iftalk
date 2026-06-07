@@ -93,7 +93,7 @@ const startConversation = async (targetUserId) => {
   }
 };
   return (
-    <div className=" w-full md:w-80 h-screen flex flex-col bg-[#0b0b10] text-white border-r border-white/10">
+    <div className=" w-full md:w-80  flex flex-col bg-[#0b0b10] text-white border-r border-white/10">
 
       {/* HEADER */}
       <div className="p-5 border-b border-white/10 bg-white/5 backdrop-blur-xl">

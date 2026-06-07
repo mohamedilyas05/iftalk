@@ -117,7 +117,7 @@ const getEffect = (text) => {
   return null;
 };
 return (
- <div className={`h-screen flex flex-col relative text-white overflow-hidden ${themeBackground[theme]}`}>
+ <div className={`flex-1 flex flex-col relative text-white overflow-hidden ${themeBackground[theme]}`}>
     {/* ❄️ CINEMATIC SNOW BACKGROUND */}
 <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
 
@@ -243,7 +243,6 @@ bg-white/5
 backdrop-blur-2xl
 shadow-[0_8px_30px_rgba(0,0,0,0.25)]
 z-20
-flex-shrink-0
 ">
 
   {/* BACK BUTTON */}
@@ -381,7 +380,6 @@ flex-shrink-0
    <div
   className={`
     flex-1
-    min-h-0
     p-4
     overflow-y-auto
     space-y-3
@@ -467,7 +465,7 @@ flex-shrink-0
     </div>
 
     {/* INPUT */}
-    <div className="border-t border-white/10 bg-white/5 backdrop-blur-xl z-10 flex-shrink-0">
+    <div className="border-t border-white/10 bg-white/5 backdrop-blur-xl z-10 ">
       <MessageInput activeChat={activeChat} user={user} setMessages={setMessages}/>
     </div>
   {showProfile && (
