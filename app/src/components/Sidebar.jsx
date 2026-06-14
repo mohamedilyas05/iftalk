@@ -226,36 +226,50 @@ const startConversation = async (targetUserId) => {
     <div className="shooting-star top-[80%]" />
 
     {/* CENTRAL CORE */}
-    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+    {/* USER SUN */}
+<div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
 
-      <div className="relative flex items-center justify-center">
+  <div className="relative flex flex-col items-center">
 
-        <div className="absolute w-40 h-40 rounded-full bg-indigo-500/20 blur-3xl animate-pulse" />
+    {/* OUTER GLOW */}
+    <div className="absolute w-40 h-40 rounded-full bg-amber-400/20 blur-3xl animate-pulse" />
 
-        <div
-          className="
-            w-24 h-24
-            rounded-full
-            bg-gradient-to-br
-            from-indigo-500
-            to-purple-600
-            flex items-center justify-center
-            shadow-[0_0_60px_rgba(99,102,241,.9)]
-            animate-corePulse
-          "
-        >
-          <span className="font-bold tracking-widest text-white">
-            IF
-          </span>
-        </div>
+    {/* ORBIT RING */}
+    <div className="absolute w-32 h-32 rounded-full border border-amber-400/20 animate-spin-slow" />
 
-      </div>
-
-      <p className="text-center text-xs text-white/50 mt-3 tracking-[4px]">
-        IFTALK CORE
-      </p>
-
+    {/* USER AVATAR */}
+    <div
+      className="
+        relative
+        w-24
+        h-24
+        rounded-full
+        overflow-hidden
+        border-4
+        border-amber-300/70
+        shadow-[0_0_60px_rgba(251,191,36,.9)]
+        animate-corePulse
+      "
+    >
+      <img
+        src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${user?.username}`}
+        alt="user"
+        className="w-full h-full object-cover"
+      />
     </div>
+
+    {/* USERNAME */}
+    <p className="mt-3 text-sm font-semibold text-amber-200">
+      {user?.username}
+    </p>
+
+    <p className="text-[10px] tracking-[3px] text-amber-300/70 uppercase">
+      You
+    </p>
+
+  </div>
+
+</div>
 
     {/* PLANETS */}
     {conversations.map((c, i) => {
