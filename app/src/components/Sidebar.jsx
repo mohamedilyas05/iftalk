@@ -194,80 +194,197 @@ const startConversation = async (targetUserId) => {
       {/* LIST */}
 
 {showGalaxy ? (
+  <div className="relative flex-1 overflow-hidden bg-[#040711]">
 
-  <div className="relative flex-1 overflow-hidden bg-[#050816]">
+    {/* NEBULA */}
+    <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-indigo-600/10 blur-[120px]" />
+    <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-cyan-500/10 blur-[120px]" />
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-purple-500/10 blur-[100px]" />
 
-  {/* STARS */}
-  {Array.from({ length: 80 }).map((_, i) => (
-    <span
-      key={i}
-      className="absolute animate-star-float"
-      style={{
-        width: "2px",
-        height: "2px",
-        background: "white",
-        borderRadius: "999px",
-        top: `${Math.random() * 100}%`,
-        left: `${Math.random() * 100}%`,
-        animationDelay: `${Math.random() * 5}s`,
-        animationDuration: `${8 + Math.random() * 10}s`,
-      }}
-    />
-  ))}
-
-  {/* PLANETS */}
-  {conversations.map((c, i) => {
-    const otherUser = c.participants.find(
-      (p) => String(p._id) !== String(user._id)
-    );
-
-    const isOnline = onlineUsers.includes(otherUser?._id);
-
-    return (
-      <div
-        key={c._id}
-        onClick={() => {
-          setActiveChat(c);
-          setShowGalaxy(false);
-        }}
-        className="absolute cursor-pointer group"
+    {/* STARS */}
+    {Array.from({ length: 120 }).map((_, i) => (
+      <span
+        key={i}
+        className="absolute animate-star-float"
         style={{
-          top: `${15 + (i % 5) * 15}%`,
-          left: `${10 + (i * 18) % 80}%`,
+          width: `${1 + Math.random() * 2}px`,
+          height: `${1 + Math.random() * 2}px`,
+          background: "white",
+          borderRadius: "999px",
+          top: `${Math.random() * 100}%`,
+          left: `${Math.random() * 100}%`,
+          opacity: Math.random(),
+          animationDelay: `${Math.random() * 5}s`,
+          animationDuration: `${5 + Math.random() * 10}s`,
         }}
-      >
-        {/* ORBIT RING */}
-        <div className="absolute inset-0 w-20 h-20 -left-2 -top-2 border border-white/10 rounded-full animate-spin-slow" />
+      />
+    ))}
 
-        {/* PLANET */}
+    {/* SHOOTING STARS */}
+    <div className="shooting-star top-[15%]" />
+    <div className="shooting-star top-[55%]" />
+    <div className="shooting-star top-[80%]" />
+
+    {/* CENTRAL CORE */}
+    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+
+      <div className="relative flex items-center justify-center">
+
+        <div className="absolute w-40 h-40 rounded-full bg-indigo-500/20 blur-3xl animate-pulse" />
+
         <div
-          className={`
-            relative w-16 h-16 rounded-full
+          className="
+            w-24 h-24
+            rounded-full
+            bg-gradient-to-br
+            from-indigo-500
+            to-purple-600
             flex items-center justify-center
-            transition-all duration-300
-            hover:scale-110
-            ${
-              isOnline
-                ? "shadow-[0_0_30px_rgba(34,197,94,0.8)]"
-                : "shadow-[0_0_25px_rgba(99,102,241,0.5)]"
-            }
-          `}
+            shadow-[0_0_60px_rgba(99,102,241,.9)]
+            animate-corePulse
+          "
         >
-          <img
-            src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${otherUser?.username}`}
-            className="w-14 h-14 rounded-full"
-            alt=""
-          />
+          <span className="font-bold tracking-widest text-white">
+            IF
+          </span>
         </div>
 
-        <p className="text-xs text-center mt-2 text-white/70">
-          {otherUser?.username}
-        </p>
       </div>
-    );
-  })}
-</div>
 
+      <p className="text-center text-xs text-white/50 mt-3 tracking-[4px]">
+        IFTALK CORE
+      </p>
+
+    </div>
+
+    {/* PLANETS */}
+    {conversations.map((c, i) => {
+      const otherUser = c.participants.find(
+        (p) => String(p._id) !== String(user._id)
+      );
+
+      const isOnline = onlineUsers.includes(otherUser?._id);
+
+      const avatar = `https://api.dicebear.com/7.x/adventurer/svg?seed=${otherUser?.username}`;
+
+      const positions = [
+        { top: "18%", left: "15%" },
+        { top: "25%", left: "75%" },
+        { top: "70%", left: "20%" },
+        { top: "75%", left: "75%" },
+        { top: "15%", left: "50%" },
+        { top: "50%", left: "10%" },
+        { top: "55%", left: "85%" },
+        { top: "85%", left: "50%" },
+      ];
+
+      const pos = positions[i % positions.length];
+
+      return (
+        <div
+          key={c._id}
+          onClick={() => {
+            setActiveChat(c);
+            setShowGalaxy(false);
+          }}
+          className="absolute group cursor-pointer"
+          style={{
+            top: pos.top,
+            left: pos.left,
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+
+          {/* ORBIT */}
+          <div className="absolute -left-4 -top-4 w-24 h-24 rounded-full border border-white/10 animate-spin-slow" />
+
+          {/* GLOW */}
+          <div
+            className={`
+              absolute inset-0 rounded-full blur-2xl scale-150
+              ${
+                isOnline
+                  ? "bg-emerald-500/40"
+                  : "bg-indigo-500/30"
+              }
+            `}
+          />
+
+          {/* PLANET */}
+          <div
+            className={`
+              relative w-16 h-16 rounded-full
+              overflow-hidden
+              transition-all duration-300
+              group-hover:scale-125
+              border
+              ${
+                isOnline
+                  ? "border-emerald-400 shadow-[0_0_35px_rgba(16,185,129,.8)]"
+                  : "border-indigo-400 shadow-[0_0_30px_rgba(99,102,241,.6)]"
+              }
+            `}
+          >
+            <img
+              src={avatar}
+              alt=""
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          {/* ONLINE DOT */}
+          {isOnline && (
+            <div className="absolute bottom-0 right-0">
+              <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping" />
+              <span className="relative block w-3 h-3 rounded-full bg-emerald-400 border border-black" />
+            </div>
+          )}
+
+          {/* NAME */}
+          <p className="text-xs text-center mt-2 text-white/80">
+            ✦ {otherUser?.username}
+          </p>
+
+          {/* HOVER CARD */}
+          <div
+            className="
+              absolute left-1/2 -translate-x-1/2
+              top-24
+              w-44
+              opacity-0
+              group-hover:opacity-100
+              transition-all duration-300
+              pointer-events-none
+              z-50
+            "
+          >
+            <div className="rounded-xl bg-black/80 backdrop-blur-xl border border-white/10 p-3">
+
+              <div className="text-sm text-white font-medium">
+                {otherUser?.username}
+              </div>
+
+              <div
+                className={`text-xs mt-1 ${
+                  isOnline
+                    ? "text-emerald-400"
+                    : "text-white/50"
+                }`}
+              >
+                {isOnline ? "Online" : "Offline"}
+              </div>
+
+              <div className="text-[11px] text-white/40 mt-2 truncate">
+                {c.lastMessage || "No messages yet"}
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      );
+    })}
+  </div>
 ) : (
       <div className="flex-1 overflow-y-auto px-2 space-y-2">
 
@@ -434,6 +551,52 @@ ${
 
 .animate-logoGlow {
   animation: logoGlow 3s ease-in-out infinite;
+}
+  @keyframes corePulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-corePulse {
+  animation: corePulse 3s ease-in-out infinite;
+}
+
+.shooting-star {
+  position: absolute;
+  width: 150px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    white
+  );
+  animation: shootingStar 8s linear infinite;
+  opacity: 0.5;
+}
+
+@keyframes shootingStar {
+  0% {
+    transform: translateX(-200px);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(1500px);
+    opacity: 0;
+  }
 }
         `}
       </style>
