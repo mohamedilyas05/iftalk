@@ -194,7 +194,8 @@ const startConversation = async (targetUserId) => {
       {/* LIST */}
 
 {showGalaxy ? (
-  <div className="relative flex-1 overflow-hidden bg-[#040711]">
+
+  <div className="relative flex-1 overflow-hidden bg-[#040711] min-h-[500px]">
 
     {/* NEBULA */}
     <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-indigo-600/10 blur-[120px]" />
@@ -225,54 +226,57 @@ const startConversation = async (targetUserId) => {
     <div className="shooting-star top-[55%]" />
     <div className="shooting-star top-[80%]" />
 
-    {/* CENTRAL CORE */}
     {/* USER SUN */}
-<div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
 
-  <div className="relative flex flex-col items-center">
+      <div className="relative flex flex-col items-center">
 
-    {/* OUTER GLOW */}
-    <div className="absolute w-40 h-40 rounded-full bg-amber-400/20 blur-3xl animate-pulse" />
+        {/* OUTER GLOW */}
+        <div className="absolute w-28 h-28 md:w-40 md:h-40 rounded-full bg-amber-400/20 blur-3xl animate-pulse" />
 
-    {/* ORBIT RING */}
-    <div className="absolute w-32 h-32 rounded-full border border-amber-400/20 animate-spin-slow" />
+        {/* EXTRA PULSE */}
+        <div className="absolute w-40 h-40 md:w-56 md:h-56 rounded-full border border-amber-400/10 animate-ping" />
 
-    {/* USER AVATAR */}
-    <div
-      className="
-        relative
-        w-24
-        h-24
-        rounded-full
-        overflow-hidden
-        border-4
-        border-amber-300/70
-        shadow-[0_0_60px_rgba(251,191,36,.9)]
-        animate-corePulse
-      "
-    >
-      <img
-        src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${user?.username}`}
-        alt="user"
-        className="w-full h-full object-cover"
-      />
+        {/* ORBIT RING */}
+        <div className="absolute w-24 h-24 md:w-32 md:h-32 rounded-full border border-amber-400/20 animate-spin-slow" />
+
+        {/* USER AVATAR */}
+        <div
+          className="
+            relative
+            w-16 h-16
+            md:w-24 md:h-24
+            rounded-full
+            overflow-hidden
+            border-4
+            border-amber-300/70
+            shadow-[0_0_60px_rgba(251,191,36,.9)]
+            animate-corePulse
+          "
+        >
+          <img
+            src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${user?.username}`}
+            alt="user"
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        {/* USERNAME */}
+        <p className="mt-2 text-xs md:text-sm font-semibold text-amber-200">
+          {user?.username}
+        </p>
+
+        <p className="text-[9px] md:text-[10px] tracking-[3px] text-amber-300/70 uppercase">
+          You
+        </p>
+
+      </div>
+
     </div>
-
-    {/* USERNAME */}
-    <p className="mt-3 text-sm font-semibold text-amber-200">
-      {user?.username}
-    </p>
-
-    <p className="text-[10px] tracking-[3px] text-amber-300/70 uppercase">
-      You
-    </p>
-
-  </div>
-
-</div>
 
     {/* PLANETS */}
     {conversations.map((c, i) => {
+
       const otherUser = c.participants.find(
         (p) => String(p._id) !== String(user._id)
       );
@@ -282,14 +286,14 @@ const startConversation = async (targetUserId) => {
       const avatar = `https://api.dicebear.com/7.x/adventurer/svg?seed=${otherUser?.username}`;
 
       const positions = [
-        { top: "18%", left: "15%" },
-        { top: "25%", left: "75%" },
-        { top: "70%", left: "20%" },
-        { top: "75%", left: "75%" },
-        { top: "15%", left: "50%" },
-        { top: "50%", left: "10%" },
-        { top: "55%", left: "85%" },
-        { top: "85%", left: "50%" },
+        { top: "12%", left: "20%" },
+        { top: "18%", left: "80%" },
+        { top: "35%", left: "10%" },
+        { top: "35%", left: "90%" },
+        { top: "75%", left: "15%" },
+        { top: "75%", left: "85%" },
+        { top: "90%", left: "30%" },
+        { top: "90%", left: "70%" },
       ];
 
       const pos = positions[i % positions.length];
@@ -301,7 +305,13 @@ const startConversation = async (targetUserId) => {
             setActiveChat(c);
             setShowGalaxy(false);
           }}
-          className="absolute group cursor-pointer"
+          className="
+            absolute
+            group
+            cursor-pointer
+            transition-transform
+            active:scale-95
+          "
           style={{
             top: pos.top,
             left: pos.left,
@@ -310,7 +320,7 @@ const startConversation = async (targetUserId) => {
         >
 
           {/* ORBIT */}
-          <div className="absolute -left-4 -top-4 w-24 h-24 rounded-full border border-white/10 animate-spin-slow" />
+          <div className="absolute -left-2 -top-2 md:-left-4 md:-top-4 w-16 h-16 md:w-24 md:h-24 rounded-full border border-white/10 animate-spin-slow" />
 
           {/* GLOW */}
           <div
@@ -327,7 +337,10 @@ const startConversation = async (targetUserId) => {
           {/* PLANET */}
           <div
             className={`
-              relative w-16 h-16 rounded-full
+              relative
+              w-12 h-12
+              md:w-16 md:h-16
+              rounded-full
               overflow-hidden
               transition-all duration-300
               group-hover:scale-125
@@ -350,18 +363,19 @@ const startConversation = async (targetUserId) => {
           {isOnline && (
             <div className="absolute bottom-0 right-0">
               <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping" />
-              <span className="relative block w-3 h-3 rounded-full bg-emerald-400 border border-black" />
+              <span className="relative block w-2 h-2 md:w-3 md:h-3 rounded-full bg-emerald-400 border border-black" />
             </div>
           )}
 
           {/* NAME */}
-          <p className="text-xs text-center mt-2 text-white/80">
+          <p className="text-[10px] md:text-xs text-center mt-1 md:mt-2 text-white/80 max-w-[70px] truncate">
             ✦ {otherUser?.username}
           </p>
 
-          {/* HOVER CARD */}
+          {/* HOVER CARD DESKTOP ONLY */}
           <div
             className="
+              hidden md:block
               absolute left-1/2 -translate-x-1/2
               top-24
               w-44
@@ -398,9 +412,10 @@ const startConversation = async (targetUserId) => {
         </div>
       );
     })}
+
   </div>
-) : (
-      <div className="flex-1 overflow-y-auto px-2 space-y-2">
+
+) : (      <div className="flex-1 overflow-y-auto px-2 space-y-2">
 
         {conversations.map((c, i) => {
           const myId = user?._id;
